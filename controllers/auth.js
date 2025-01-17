@@ -82,10 +82,15 @@ const login = async (req, res = response) => {
     }
 }
 
-const tokenValid = (req, res = response) => {
-    res.json({
+const tokenValid = async (req, res = response) => {
+    const { uid, name } = req;
+    const token = await generateJWT(uid, name);
+
+    res.status(200).json({
         ok: true,
-        msg: 'token Valid'
+        name: name,
+        uid: uid,
+        token
     });
 }
 
